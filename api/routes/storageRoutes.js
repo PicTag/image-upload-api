@@ -5,13 +5,14 @@ var router = express.Router();
 import multer from 'multer';
 const upload = multer();
 
-router.post('/upload', upload.single('file'), async function (req, res) {
+router.post('/upload', upload.array('files', 12), async function (req, res) {
   try {
-    const title = req.body.title;
-    const file = req.file;
+    const files = req.files;
 
-    await putObject(title, file.buffer);
+    let puts = [];
+    files.forEach((file) => puts.push(putObject(file.originalname, file.buffer)));
 
+    const values = await Promise.all(puts);
     res.sendStatus(200);
   } catch (error) {
     res.send(error.message);
