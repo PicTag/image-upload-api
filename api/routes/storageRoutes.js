@@ -8,7 +8,8 @@ const upload = multer();
 router.post('/upload', upload.array('files', 12), async function (req, res) {
   try {
     const files = req.files;
-
+    console.log(req);
+    console.log(files);
     let puts = [];
     files.forEach((file) => puts.push(putObject(file.originalname, file.buffer)));
 
