@@ -5,7 +5,7 @@ var router = express.Router();
 import multer from 'multer';
 const upload = multer();
 
-router.get('/classify', upload.array('files', 12), async function (req, res) {
+router.post('/classify', upload.array('files', 12), async function (req, res) {
   try {
     console.log('got req');
     const files = req.files;
